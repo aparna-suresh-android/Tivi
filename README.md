@@ -2,6 +2,8 @@
 
 It is a simple app that lists the Tv shows.
 
+The app makes use of the apis from, https://developers.themoviedb.org/ to fetch the TV shows.
+
 There are two screens
 
 First Screen : Lists the popular shows
