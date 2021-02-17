@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.app.tivi.utils.Converters" />
+
+        <variable
+            name="showDeatilsViewModel"
+            type="com.app.tivi.features.tvDetails.ShowDeatilsViewModel" />
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/imagePostCardView"
+                android:layout_width="154dp"
+                android:layout_height="154dp"
+                android:layout_margin="5dp"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/poster"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:error="@{@drawable/ic_launcher_background}"
+                    app:imageUrl="@{showDeatilsViewModel.showDetails.posterUrl}"
+                    app:placeholder="@{@drawable/ic_launcher_background}" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:textStyle="bold|italic"
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintWidth_percent="0.5"
+                android:layout_marginLeft="10dp"
+                android:text="@{@string/title_first_air_year(showDeatilsViewModel.showDetails.name,showDeatilsViewModel.showDetails.firstAirYear)}"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toRightOf="@id/imagePostCardView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+            <TextView
+                android:id="@+id/genres"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@{Converters.convertStringArrayToString(showDeatilsViewModel.showDetails.genreNames,',')}"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toRightOf="@id/imagePostCardView"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintWidth_percent="0.5" />
+
+            <TextView
+                android:id="@+id/duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@{@string/duration(Converters.convertMinutesToHour(showDeatilsViewModel.showDetails.episodeRunTime[0]))}"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toRightOf="@id/imagePostCardView"
+                app:layout_constraintTop_toBottomOf="@id/genres" />
+
+
+            <TextView
+                android:id="@+id/userScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@{@string/user_score(showDeatilsViewModel.showDetails.score)}"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toRightOf="@id/imagePostCardView"
+                app:layout_constraintTop_toBottomOf="@id/duration" />
+
+            <TextView
+                android:id="@+id/tagline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{showDeatilsViewModel.showDetails.tagline}"
+                android:textSize="14sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imagePostCardView" />
+
+            <TextView
+                android:textStyle="bold|italic"
+                android:id="@+id/overviewTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Overview"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tagline" />
+
+            <TextView
+
+                android:id="@+id/overview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@{showDeatilsViewModel.showDetails.overview}"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/overviewTv" />
+
+
+            <TextView
+                android:textStyle="bold|italic"
+                android:id="@+id/creditorRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Creator : "
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/overview" />
+
+            <TextView
+                android:textStyle="bold|italic"
+                android:id="@+id/creditorName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@{showDeatilsViewModel.showDetails.createdBy[0].name}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/overview"
+                app:layout_constraintLeft_toRightOf="@+id/creditorRole" />
+
+
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/seriescastTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Series Cast"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/creditorName" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/castList"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:items="@{showDeatilsViewModel.casts}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/seriescastTv" />
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/similarShowsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Similar Shows"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/castList" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/similarShowsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:items="@{showDeatilsViewModel.similarShows}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/similarShowsTextView" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

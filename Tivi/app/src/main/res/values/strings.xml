@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Tivi</string>
+    <string name="title_first_air_year">%s - %d</string>
+    <string name="duration">Duration: %s</string>
+    <string name="user_score">User score: %d\%%</string>
+    <string name="episode_count">%d episodes</string>
+</resources>

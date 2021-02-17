@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="tvShow"
+            type="com.app.tivi.repository.newtork.response.ShowIListItem" />
+
+        <variable
+            name="showClickListner"
+            type="com.app.tivi.features.popular.ui.ShowClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:onClick="@{() -> showClickListner.onClick(tvShow)}">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/imagePostCardView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/poster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:error="@{@drawable/ic_launcher_background}"
+                app:imageUrl="@{tvShow.posterUrl}"
+                app:placeholder="@{@drawable/ic_launcher_background}" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            app:layout_constraintVertical_chainStyle="packed"
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:maxWidth="200dp"
+            android:singleLine="false"
+            android:text="@{tvShow.name}"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@id/imagePostCardView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/airDate"/>
+
+        <TextView
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/imagePostCardView"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            android:textSize="16sp"
+            android:text="@{tvShow.firstAirDate}"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/airDate"
+            app:layout_constraintBottom_toTopOf="@+id/userScore"/>
+
+
+        <TextView
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/userScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@{@string/user_score(tvShow.score)}"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/airDate"
+            app:layout_constraintLeft_toRightOf="@id/imagePostCardView"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
