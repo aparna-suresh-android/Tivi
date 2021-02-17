@@ -35,25 +35,21 @@ class MainActivity : AppCompatActivity() {
 
         mBinding.viewModel = viewModel;
 
-        viewModel.mShowItemClicked.observe(this,{
-            if(it) {
-
+        viewModel.mShowId.observe(this,{event ->
+            event.getEventDataIfNotHandled()?.let{showId ->
                 val txn = supportFragmentManager.beginTransaction()
                 val frag = ShowDetailsFragment();
                 val bundle = Bundle();
-                bundle.putLong("showId", viewModel.mShowId);
+                bundle.putLong("showId", showId);
                 frag.arguments = bundle
                 txn.replace(mBinding.container.id, frag)
                 txn.addToBackStack(null);
                 txn.commit()
-                viewModel.onShowClickDone();
             }
-
         })
 
         if(savedInstanceState == null) {
             val txn = supportFragmentManager.beginTransaction()
-
             txn.replace(mBinding.container.id, PopularFragment(), "popular")
             txn.commit()
         }

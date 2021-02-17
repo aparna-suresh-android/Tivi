@@ -1,20 +1,17 @@
 package com.app.tivi.features.mainactivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.app.tivi.utils.Event
 import javax.inject.Inject
 
 
 class MainActivityViewModel @Inject constructor(): ViewModel() {
-    var mShowItemClicked = MutableLiveData<Boolean>();
-    var mShowId : Long = -1L;
+    var mShowItemClicked = MutableLiveData<Event<Boolean>>();
+    var mShowId = MutableLiveData<Event<Long>>();
 
 
     fun onShowClicked(showId: Long) {
-        mShowId = showId;
-        mShowItemClicked.value = true
-    }
-
-    fun onShowClickDone() {
-        mShowItemClicked.value = false;
+        mShowId.value = Event(showId);
+//        mShowItemClicked.value = Event(true)
     }
 }
