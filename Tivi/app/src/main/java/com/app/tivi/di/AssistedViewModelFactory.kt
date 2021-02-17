@@ -3,7 +3,7 @@ package com.app.tivi.di
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.app.tivi.IAssistedViewModelFactory
+import com.app.tivi.utils.IAssistedViewModelFactory
 
 class ViewModelFactory<out V : ViewModel>(
     private val viewModelFactory: IAssistedViewModelFactory<V>,

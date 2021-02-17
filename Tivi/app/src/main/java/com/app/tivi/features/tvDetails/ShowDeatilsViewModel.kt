@@ -1,9 +1,8 @@
 package com.app.tivi.features.tvDetails
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.*
-import com.app.tivi.IAssistedViewModelFactory
+import com.app.tivi.utils.IAssistedViewModelFactory
 import com.app.tivi.repository.Repository
 import com.app.tivi.repository.newtork.response.CastIListItem
 import com.app.tivi.repository.newtork.response.ShowDetails
