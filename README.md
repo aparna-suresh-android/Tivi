@@ -4,7 +4,7 @@ It is a simple app that lists the Tv shows.
 
 The app makes use of the apis from, https://developers.themoviedb.org/ to fetch the TV shows.
 
-First Screen : Lists the popular shows,along with an option to "Favourite" or "un-favourite" a show.
+On launching the app,the first screen lists the popular shows,with an option to "Favourite" or "un-favourite" a show.
 
 Clicking on any one of the list item,leads to the second screen, which shows the details about the tv show.
 
