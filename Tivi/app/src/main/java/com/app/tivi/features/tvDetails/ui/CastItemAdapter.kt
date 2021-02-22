@@ -5,15 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.tivi.databinding.CastItemBinding
 import com.app.tivi.features.popular.ui.onItemsUpdated
-import com.app.tivi.repository.newtork.response.CastIListItem
+import com.app.tivi.features.uiModel.CastListItem
+import com.app.tivi.repository.newtork.response.CastItemResponse
 
 class CastItemAdapter : RecyclerView.Adapter<CastItemAdapter.ViewHolder>(),
-    onItemsUpdated<CastIListItem> {
+    onItemsUpdated<CastListItem> {
 
-    private var castItem: List<CastIListItem> = ArrayList()
+    private var castItem: List<CastListItem> = ArrayList()
 
     inner class ViewHolder(val binding: CastItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: CastIListItem) {
+        fun bind(item: CastListItem) {
             binding.cast = item
         }
     }
@@ -32,7 +33,7 @@ class CastItemAdapter : RecyclerView.Adapter<CastItemAdapter.ViewHolder>(),
         return castItem.size
     }
 
-    override fun updateItems(items: List<CastIListItem>) {
+    override fun updateItems(items: List<CastListItem>) {
         castItem = items
         notifyDataSetChanged()
     }

@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="@{@string/duration(Converters.convertMinutesToHour(showDeatilsViewModel.showDetails.episodeRunTime[0]))}"
+                android:text="@{@string/duration(Converters.convertMinutesToHour(showDeatilsViewModel.showDetails.episodeRunTime))}"
                 android:textSize="15sp"
                 app:layout_constraintLeft_toRightOf="@id/imagePostCardView"
                 app:layout_constraintTop_toBottomOf="@id/genres" />
@@ -134,7 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="@{showDeatilsViewModel.showDetails.createdBy[0].name}"
+                android:text="@{showDeatilsViewModel.showDetails.createdBy}"
                 android:textSize="18sp"
                 app:layout_constraintTop_toBottomOf="@+id/overview"
                 app:layout_constraintLeft_toRightOf="@+id/creditorRole" />

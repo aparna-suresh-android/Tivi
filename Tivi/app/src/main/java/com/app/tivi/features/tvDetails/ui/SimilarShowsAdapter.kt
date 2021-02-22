@@ -5,20 +5,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.tivi.databinding.SimilarTvShowItemBinding
 import com.app.tivi.features.popular.ui.onItemsUpdated
-import com.app.tivi.repository.newtork.response.ShowIListItem
+import com.app.tivi.features.uiModel.ShowDetails
+import com.app.tivi.features.uiModel.ShowListItem
+import com.app.tivi.repository.newtork.response.ShowItemResponse
 
 class SimilarShowsAdapter : RecyclerView.Adapter<SimilarShowsAdapter.ViewHolder>(),
-    onItemsUpdated<ShowIListItem> {
+    onItemsUpdated<ShowListItem> {
 
-    private var similarShows: List<ShowIListItem> = ArrayList()
+    private var similarShows: List<ShowListItem> = ArrayList()
 
     inner class ViewHolder(val binding: SimilarTvShowItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ShowIListItem) {
+        fun bind(item: ShowListItem) {
             binding.similarShow = item
         }
-
-
     }
 
     override fun onCreateViewHolder(
@@ -41,7 +41,7 @@ class SimilarShowsAdapter : RecyclerView.Adapter<SimilarShowsAdapter.ViewHolder>
         return similarShows.size
     }
 
-    override fun updateItems(items: List<ShowIListItem>) {
+    override fun updateItems(items: List<ShowListItem>) {
         similarShows = items
         notifyDataSetChanged()
     }

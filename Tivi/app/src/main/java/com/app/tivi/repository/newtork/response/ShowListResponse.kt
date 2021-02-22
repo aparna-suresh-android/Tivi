@@ -28,10 +28,10 @@ package com.app.tivi.repository.newtork.response
  */
 
  class ShowListResponse (
-        val page : Int,
-        val results: Array<ShowIListItem>,
-        val totalPages: Int,
-        val totalResults : Int
+    val page : Int,
+    val results: Array<ShowItemResponse>,
+    val totalPages: Int,
+    val totalResults : Int
 ){
 
 }

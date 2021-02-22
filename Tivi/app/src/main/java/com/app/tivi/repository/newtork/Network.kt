@@ -1,21 +1,17 @@
 package com.app.tivi.repository.newtork
 
-import android.util.Log
 import com.app.tivi.repository.newtork.response.*
 import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
+
 class Network @Inject constructor(
     private val mOkHttpClient: OkHttpClient,
     private val mBaseUrl: HttpUrl,
     private val mGson: Gson
 ) {
-
-
     companion object {
         private const val PROTOCOL = "https"
         private const val BASE_URL = "api.themoviedb.org"
@@ -39,40 +35,22 @@ class Network @Inject constructor(
 
         try {
             val response: Response = mOkHttpClient.newCall(req).execute()
-            response.body?.let { responseBody ->
-                val popularTvs = mGson
-                    .fromJson(responseBody.string(), ShowListResponse::class.java)
+            response.use { resp ->
+                resp.body?.let { responseBody ->
+                    val popularTvs = mGson
+                        .fromJson(responseBody.string(), ShowListResponse::class.java)
 
-                responseBody.close()
-                return popularTvs
+                    responseBody.close()
+                    return popularTvs
+                }
             }
-        } catch (e: IOException) {
+        }catch (e: IOException) {
             return null
         }
         return null
     }
 
 
-    fun getGenres(): GenreResponse? {
-        Log.i("aparna", "getGenres")
-        val httpUrl = mBaseUrl.newBuilder().addPathSegments(Apis.GENRE).build()
-
-        var req = Request.Builder().url(httpUrl).build()
-
-        try {
-            val response: Response = mOkHttpClient.newCall(req).execute()
-            response.body?.let { responseBody ->
-                val genreResponse = mGson
-                    .fromJson(responseBody.string(), GenreResponse::class.java)
-//                Log.i("aparna","${genreResponse.genres}")
-                responseBody.close()
-                return genreResponse
-            }
-        } catch (e: IOException) {
-            return null
-        }
-        return null
-    }
 
 
     fun getCast(id: Long): CastResponse? {
@@ -85,14 +63,14 @@ class Network @Inject constructor(
 
         try {
             val response: Response = mOkHttpClient.newCall(req).execute()
-            response.body?.let { responseBody ->
-                val castResponse = mGson
-                    .fromJson(responseBody.string(), CastResponse::class.java)
-
-                responseBody.close()
-                return castResponse
+            response.use { resp ->
+                resp.body?.let { responseBody ->
+                    val castResponse = mGson
+                        .fromJson(responseBody.string(), CastResponse::class.java)
+                    return castResponse
+                }
             }
-        } catch (e: IOException) {
+        }catch (e: IOException) {
             return null
         }
         return null
@@ -109,22 +87,21 @@ class Network @Inject constructor(
 
         try {
             val response: Response = mOkHttpClient.newCall(req).execute()
-            response.body?.let { responseBody ->
-                val showListResponse = mGson
-                    .fromJson(responseBody.string(), ShowListResponse::class.java)
-
-                responseBody.close()
-                return showListResponse
+            response.use { resp ->
+                resp.body?.let { responseBody ->
+                    val showListResponse = mGson
+                        .fromJson(responseBody.string(), ShowListResponse::class.java)
+                    return showListResponse
+                }
             }
-        } catch (e: IOException) {
+        }catch (e: IOException) {
             return null
         }
         return null
     }
 
 
-    fun getTvDetails(id: Long): ShowDetails? {
-        Log.i("aparna", "n/w getTvDetails ${this@Network}")
+    fun getTvDetails(id: Long): ShowDetailsResponse? {
         val httpUrl = mBaseUrl.newBuilder()
             .addPathSegments(Apis.SHOW_DETAILS + "/${id}")
             .build()
@@ -133,15 +110,16 @@ class Network @Inject constructor(
 
         try {
             val response: Response = mOkHttpClient.newCall(req).execute()
-            response.body?.let { responseBody ->
-                val showDetails = mGson
-                    .fromJson(responseBody.string(), ShowDetails::class.java)
-
-                responseBody.close()
-                return showDetails
+            response.use {  resp ->
+                resp.body?.let { responseBody ->
+                    val showDetails = mGson
+                        .fromJson(responseBody.string(), ShowDetailsResponse::class.java)
+                    return showDetails
+                }
             }
-        } catch (e: IOException) {
-            return null
+        }catch (e: IOException) {
+                return null
+
         }
         return null
     }

@@ -53,7 +53,6 @@ class ShowDetailsFragment : Fragment() {
             layoutManager = linearLayoutManager2
             adapter = CastItemAdapter()
         }
-//        Log.i("aparna","ShowDetailsFragment ${mActivityViewModel}");
 
         return binding.root
     }

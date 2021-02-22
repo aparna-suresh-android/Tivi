@@ -5,14 +5,14 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.app.tivi.features.popular.ui.onItemsUpdated
-import com.app.tivi.repository.newtork.response.IListItemResponse
+import com.app.tivi.features.uiModel.IListItem
 import com.squareup.picasso.Picasso
 
 
 @BindingAdapter("items")
-fun updateListItems(view: RecyclerView, tvShows: List<IListItemResponse>?) {
+fun updateListItems(view: RecyclerView, tvShows: List<IListItem>?) {
     tvShows?.let {
-        val adapter = view.adapter as onItemsUpdated<IListItemResponse>
+        val adapter = view.adapter as onItemsUpdated<IListItem>
         adapter.updateItems(tvShows)
     }
 }

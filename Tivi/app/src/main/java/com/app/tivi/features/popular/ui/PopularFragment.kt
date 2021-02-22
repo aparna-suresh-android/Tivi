@@ -2,15 +2,15 @@ package com.app.tivi.features.popular.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.app.tivi.R
 import com.app.tivi.TiviApplication
-import com.app.tivi.databinding.FragPopularTvBinding
+import com.app.tivi.databinding.FragShowsListBinding
 import com.app.tivi.features.mainactivity.MainActivity
 import com.app.tivi.features.mainactivity.MainActivityViewModel
 import com.app.tivi.features.popular.PopularTvViewModel
@@ -22,18 +22,44 @@ class PopularFragment : Fragment() {
     @Inject
     lateinit var mViewModelFactory: ViewModelProvider.Factory
 
-    val mActivityViewModel: MainActivityViewModel by lazy {
+    private val mActivityViewModel: MainActivityViewModel by lazy {
         ViewModelProvider(requireActivity() as MainActivity, mViewModelFactory)
             .get(MainActivityViewModel::class.java)
     }
 
-    private lateinit var mAdapter: PopularTvAdapter
+    private lateinit var mBinding: FragShowsListBinding
+    private lateinit var mAdapter: ShowListAdapter
+
+    private val mShowClickListener: ShowClickListener = ShowClickListener { showListItem, view ->
+        when (view.id) {
+            R.id.showItemView -> {
+                mActivityViewModel.onShowClicked(showListItem.id)
+            }
+            R.id.favourite -> {
+                mAdapter.updateFavourite(showListItem)
+                mViewModel.updateFavourite(showListItem)
+            }
+        }
+    }
+
+    private lateinit var mViewModel: PopularTvViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity().application as TiviApplication)
             .mAppComponent.getPopularTvComponent().create()
             .injectPopularTvFragment(this)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+        setFragmentResultListener("removedFavShows") { requestKey, bundle ->
+            val removedItemsKey = bundle.getLongArray("ids")
+            mViewModel.updateShows(removedItemsKey)
+        }
 
     }
 
@@ -42,24 +68,27 @@ class PopularFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragPopularTvBinding.inflate(inflater)
-        binding.lifecycleOwner = viewLifecycleOwner
 
-        val viewModel = ViewModelProvider(this, mViewModelFactory)
+        mBinding = FragShowsListBinding.inflate(inflater)
+        mBinding.lifecycleOwner = viewLifecycleOwner
+        mViewModel = ViewModelProvider(this, mViewModelFactory)
             .get(PopularTvViewModel::class.java)
-        binding.viewModel = viewModel
+        mBinding.viewModel = mViewModel
+        (requireActivity() as MainActivity).supportActionBar?.title = "Popular"
+        initRecyclerView()
+       return mBinding.root
+    }
 
+
+    private fun initRecyclerView() {
+
+        mAdapter = PopularTvAdapter(mShowClickListener)
 
         val linearLayoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.VERTICAL, false
         )
-        mAdapter = PopularTvAdapter(ShowClickListener { showId ->
-            mActivityViewModel.onShowClicked(showId)
-        })
-
-
-        binding.list.run {
+        mBinding.list.run {
             layoutManager = linearLayoutManager
             adapter = mAdapter
             addItemDecoration(
@@ -69,7 +98,20 @@ class PopularFragment : Fragment() {
                 )
             )
         }
-        return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.favourites, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.favourites -> {
+                mActivityViewModel.showFavourites()
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 

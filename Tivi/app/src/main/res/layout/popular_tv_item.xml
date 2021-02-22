@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
         <variable
             name="tvShow"
-            type="com.app.tivi.repository.newtork.response.ShowIListItem" />
+            type="com.app.tivi.features.uiModel.ShowListItem" />
+        
+
 
         <variable
-            name="showClickListner"
+            name="showClickListener"
             type="com.app.tivi.features.popular.ui.ShowClickListener" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id = "@+id/showItemView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:onClick="@{() -> showClickListner.onClick(tvShow)}">
+        android:onClick="@{() -> showClickListener.onClick(tvShow,showItemView)}">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/imagePostCardView"
@@ -48,20 +53,7 @@
             android:textSize="16sp"
             app:layout_constraintLeft_toRightOf="@id/imagePostCardView"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/airDate"/>
-
-        <TextView
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/imagePostCardView"
-            app:layout_constraintTop_toBottomOf="@id/name"
-            android:textSize="16sp"
-            android:text="@{tvShow.firstAirDate}"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/airDate"
             app:layout_constraintBottom_toTopOf="@+id/userScore"/>
-
 
         <TextView
             app:layout_constraintBottom_toBottomOf="parent"
@@ -71,8 +63,24 @@
             android:layout_marginLeft="10dp"
             android:text="@{@string/user_score(tvShow.score)}"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/airDate"
+            app:layout_constraintTop_toBottomOf="@id/name"
             app:layout_constraintLeft_toRightOf="@id/imagePostCardView"/>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5"
+            android:id="@+id/guideline"/>
+
+        <ImageView
+            android:onClick="@{() -> showClickListener.onClick(tvShow,favourite)}"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guideline"
+            tools:src = "@drawable/favuorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/favourite"
+            android:src="@{tvShow.isFavourite ? @drawable/favuorite : @drawable/unfavuorite}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

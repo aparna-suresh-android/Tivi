@@ -10,10 +10,5 @@ interface ShowDetailsComponent {
     interface Factory{
         fun create() : ShowDetailsComponent;
     }
-
-
-
-
-
     fun inject(fragment: ShowDetailsFragment)
 }

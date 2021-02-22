@@ -4,7 +4,7 @@
     <data>
         <variable
             name="cast"
-            type="com.app.tivi.repository.newtork.response.CastIListItem" />
+            type="com.app.tivi.features.uiModel.CastListItem" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
 
             android:layout_margin="3dp"
-            android:text="@{cast.roles[0].character}"
+            android:text="@{cast.characterPlayed}"
             android:textSize="14sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/name" />
